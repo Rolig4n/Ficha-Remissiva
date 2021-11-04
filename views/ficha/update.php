@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\FchFichaRemissiva */
 
-$this->title = 'Update Fch Ficha Remissiva: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Fch Ficha Remissivas', 'url' => ['index']];
+$this->title = 'Atualizar Ficha Remissiva: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Ficha Remissivas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
