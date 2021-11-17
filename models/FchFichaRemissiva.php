@@ -11,8 +11,9 @@ use Yii;
  * @property string $assinatura
  * @property string $nome_completo
  * @property string|null $nome_mae
- * @property string $created_at
- * @property string $updated_at
+ * @property int $registro_matricula
+ * @property int $data_nascimento
+ * @property int $created_by
  */
 class FchFichaRemissiva extends \yii\db\ActiveRecord
 {
@@ -30,8 +31,7 @@ class FchFichaRemissiva extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['assinatura', 'nome_completo', 'created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['assinatura', 'nome_completo', 'registro_matricula', 'data_nascimento', 'created_by'], 'required'],
             [['assinatura'], 'string', 'max' => 100],
             [['nome_completo', 'nome_mae'], 'string', 'max' => 250],
         ];
@@ -47,8 +47,9 @@ class FchFichaRemissiva extends \yii\db\ActiveRecord
             'assinatura' => 'Assinatura',
             'nome_completo' => 'Nome Completo',
             'nome_mae' => 'Nome Mae',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'registro_matricula' => 'Registro de Matricula',
+            'data_nascimento' => 'Data de Nascimento',
+            'created_by' => 'Criado por',
         ];
     }
 }
