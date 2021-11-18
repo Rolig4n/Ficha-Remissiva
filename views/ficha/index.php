@@ -31,9 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'data_nascimento',
                 'value' => function ($model, $key, $index, $column)
                 {
-                    return $model->data_nascimento;
-                },
-                'format' => 'dd/MM/yyyy',
+                    $date = new DateTime();
+                    $date->setTimestamp($model->data_nascimento);
+                    return $date->format('d-m-Y');
+                }
             ],
 
             ['class' => 'yii\grid\ActionColumn'],
