@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 
 /**
  * FichaController implements the CRUD actions for FchFichaRemissiva model.
@@ -48,19 +49,6 @@ class FichaController extends Controller
      */
     public function actionIndex()
     {
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => FchFichaRemissiva::find(),
-        //     /*
-        //     'pagination' => [
-        //         'pageSize' => 50
-        //     ],
-        //     'sort' => [
-        //         'defaultOrder' => [
-        //             'id' => SORT_DESC,
-        //         ]
-        //     ],
-        //     */
-        // ]);
         $searchModel = new FchFichaRemissivaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -98,10 +86,12 @@ class FichaController extends Controller
             //convertendo em timestamp
             $data = new DateTime($model->data_nascimento);
             $model->data_nascimento = $data->getTimestamp();
+            $model->created_by = Yii::$app->user->identity->id;
             if ($model->save())
             {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+            else throw new BadRequestHttpException;
         }
         else
         {

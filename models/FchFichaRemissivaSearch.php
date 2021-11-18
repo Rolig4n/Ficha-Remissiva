@@ -21,6 +21,11 @@ class FchFichaRemissivaSearch extends FchFichaRemissiva
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                'assinatura' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
