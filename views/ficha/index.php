@@ -21,15 +21,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'assinatura',
             'nome_completo',
             'nome_mae',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'data_nascimento',
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->data_nascimento;
+                },
+                'format' => 'dd/MM/yyyy',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

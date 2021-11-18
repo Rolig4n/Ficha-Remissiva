@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use app\models\FchFichaRemissiva;
+use app\models\FchFichaRemissivaSearch;
+use DateTime;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -24,7 +27,7 @@ class FichaController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout','index','create','update','delete'],
+                        'actions' => ['logout','index','view','create','update','delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,22 +48,24 @@ class FichaController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => FchFichaRemissiva::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
-
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => FchFichaRemissiva::find(),
+        //     /*
+        //     'pagination' => [
+        //         'pageSize' => 50
+        //     ],
+        //     'sort' => [
+        //         'defaultOrder' => [
+        //             'id' => SORT_DESC,
+        //         ]
+        //     ],
+        //     */
+        // ]);
+        $searchModel = new FchFichaRemissivaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
@@ -86,17 +91,25 @@ class FichaController extends Controller
     {
         $model = new FchFichaRemissiva();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost)
+        {
+            $request = $this->request->post();
+            $model->load($request);
+            //convertendo em timestamp
+            $data = new DateTime($model->data_nascimento);
+            $model->data_nascimento = $data->getTimestamp();
+            if ($model->save())
+            {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else
+        {
+            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -109,7 +122,6 @@ class FichaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
