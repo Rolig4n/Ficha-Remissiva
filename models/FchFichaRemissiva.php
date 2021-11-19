@@ -14,6 +14,8 @@ use Yii;
  * @property int $registro_matricula
  * @property int $data_nascimento
  * @property int $created_by
+ *
+ * @property UsrUsuario $createdBy
  */
 class FchFichaRemissiva extends \yii\db\ActiveRecord
 {
@@ -32,8 +34,11 @@ class FchFichaRemissiva extends \yii\db\ActiveRecord
     {
         return [
             [['assinatura', 'nome_completo', 'registro_matricula', 'data_nascimento', 'created_by'], 'required'],
+            [['registro_matricula', 'created_by'], 'integer'],
             [['assinatura'], 'string', 'max' => 100],
             [['nome_completo', 'nome_mae'], 'string', 'max' => 250],
+            [['registro_matricula'], 'unique'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => UsrUsuario::className(), 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -47,9 +52,19 @@ class FchFichaRemissiva extends \yii\db\ActiveRecord
             'assinatura' => 'Assinatura',
             'nome_completo' => 'Nome Completo',
             'nome_mae' => 'Nome Mae',
-            'registro_matricula' => 'Registro de Matricula',
-            'data_nascimento' => 'Data de Nascimento',
-            'created_by' => 'Criado por',
+            'registro_matricula' => 'Registro Matricula',
+            'data_nascimento' => 'Data Nascimento',
+            'created_by' => 'Criado Por',
         ];
+    }
+
+    /**
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(UsrUsuario::className(), ['id' => 'created_by']);
     }
 }

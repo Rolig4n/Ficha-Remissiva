@@ -112,8 +112,16 @@ class FichaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost)
+        {
+            $request = $this->request->post();
+            $model->load($request);
+            $data = new DateTime($model->data_nascimento);
+            $model->data_nascimento = $data->getTimestamp();
+            if($model->save())
+            {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
