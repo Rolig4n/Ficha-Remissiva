@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 {
                     $date = new DateTime();
                     $date->setTimestamp($model->data_nascimento);
-                    return $date->format('d-m-Y');
+                    return $date->format('d/m/Y');
                 }
             ],
 

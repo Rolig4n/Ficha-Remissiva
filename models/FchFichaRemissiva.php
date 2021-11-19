@@ -33,8 +33,8 @@ class FchFichaRemissiva extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['assinatura', 'nome_completo', 'registro_matricula', 'data_nascimento', 'created_by'], 'required'],
             [['registro_matricula', 'created_by'], 'integer'],
+            //[['data_nascimento'],'trim'],
             [['assinatura'], 'string', 'max' => 100],
             [['nome_completo', 'nome_mae'], 'string', 'max' => 250],
             [['registro_matricula'], 'unique'],

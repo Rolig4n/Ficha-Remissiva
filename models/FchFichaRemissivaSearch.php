@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use DateTime;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -40,7 +41,7 @@ class FchFichaRemissivaSearch extends FchFichaRemissiva
             'assinatura' => $this->assinatura,
             'nome_completo' => $this->nome_completo,
             'nome_mae' => $this->nome_mae,
-            'data_nascimento' => $this->data_nascimento,
+            //'data_nascimento' => $this->data_nascimento,
         ]);
                 
         return $dataProvider;
