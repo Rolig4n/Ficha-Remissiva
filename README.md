@@ -8,7 +8,7 @@ Auxiliar no controle de fichas dos alunos na escola Sashara Singh Filho, no muni
 | :label: Tecnologias | php, postgres
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![](https://via.placeholder.com/1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
+![](./assets/Home Ficha.png#vitrinedev)
 
 ## Detalhes do projeto
 
